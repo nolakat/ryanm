@@ -1,0 +1,135 @@
+
+.fadeOut{
+    opacity: 0;
+    top: 50px;
+    transition: 1s all ease;
+}
+
+.fadeIn{
+    opacity: 1;
+    top: 0px;
+    transition: 1s all ease;
+}
+
+
+#gallery-container{
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    grid-column: 1 / span 12;
+    grid-row: 1/ span 3;
+    overflow:hidden;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 1fr 1fr 1fr;
+    display: grid;
+
+      .image-wrap{
+        // max-width: 450px;
+        height: auto;
+        grid-column: span 2;
+        background-image: cover;
+        padding: 10px;
+          &:hover{
+              cursor: pointer;
+          }
+
+          @media(min-width: $Viewport-sm){
+              width: 100%;
+          }
+          @media(min-width: $Viewport-md){
+              width: 100%;
+          }
+
+      }
+}
+
+
+#gallery-label--wrap{
+    position: relative;
+}
+#gallery-label{
+    border: 2px solid black;
+    background: #fff;
+    grid-column: 1 / span 2;
+    grid-row: 2;
+    overflow: hidden;
+    z-index: 3;
+  
+    .gallery-label--content{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 20px;
+
+        a{
+            position:relative;
+            top: 0px;
+            transition: top .25s ease-in;
+            box-shadow: 0px 0px 0px rgba(0,0,0,0.5);
+
+            &:hover{
+                cursor: pointer;
+                top: -1.5px;
+                box-shadow: 0px 2px 2.5px rgba(0,0,0,0.5);
+                transition: top .25s ease-in;
+            }
+        }
+    }
+
+    #gallery-label--title{
+        padding: 0px 25px;
+        font-size: 24px;
+    }
+
+    #gallery-label--desc{
+        padding: 15px 0px;
+    }
+
+    #gallery-label--desc{
+    }
+}
+
+div#gallery-overlay {
+    grid-column: 1 / span 12;
+    grid-row: 1/ span 3;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    display: flex;
+
+    &.hidden{
+        opacity:0 ;
+        visibility: hidden;
+        transition: all .25s ease;
+
+        img.overlay_img{
+            top: 80px;
+            transition: all .25s ease;
+        }
+    }
+
+     &.visible{
+        display: flex;
+        visibility: visible;
+        opacity: 1;
+        transition: all .25s ease;
+
+        img.overlay_img{
+            top: 0px;
+            transition: all .25s ease;
+        }
+    }
+
+
+    img.overlay_img{
+        border: 2px solid black;
+        position:relative;
+        // height: 100%;
+        max-height: 800px !important;
+    }
+
+}
