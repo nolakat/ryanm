@@ -2,8 +2,8 @@
 $(window).on('load', function(){ 
     console.log('DOM Load');
     Barba.Pjax.Dom.wrapperId = 'main';
-Barba.Pjax.Dom.containerClass = 'main-wrap';
-Barba.Pjax.cacheEnabled = false;
+    Barba.Pjax.Dom.containerClass = 'main-wrap'; 
+    Barba.Pjax.cacheEnabled = false;
 
     Barba.Pjax.start();
 
@@ -15,7 +15,11 @@ Barba.Pjax.cacheEnabled = false;
 });
 
 
-Barba.Dispatcher.on('newPageReady', function(currentStatus, oldStatus, container) {
+Barba.Dispatcher.on('transitionCompleted', function(currentStatus, oldStatus, container) {
+
+console.log('container', container);
+//  $overlay = $($(container).find('#gallery-overlay'));
+
   // Re-init your scripts here.
 
       init();
@@ -27,8 +31,7 @@ Barba.Dispatcher.on('newPageReady', function(currentStatus, oldStatus, container
 init = function(){
 
 console.log('init run');
-
-let $overlay = $('#gallery-overlay');
+$overlay = $("#gallery-overlay");
 let $label = $('#gallery-label');
 let $label_title = $('#gallery-label--title');
 let $label_desc = $('#gallery-label--desc');
@@ -40,6 +43,22 @@ console.log($currentImageContainer);
 $overlay.append($image);
 
 
+$('nav').on("click", function(){
+  console.log('nav click');
+
+  clearLabel();
+  
+});
+
+function clearLabel(){
+  $($label).removeClass('slideIn ');
+  $($label).addClass('slideOut');
+  $($label_title).html("");
+  $($label_desc).html("");
+  return;
+}
+
+
  $("#prev").on("click",function(){
 
   //get previous image
@@ -48,14 +67,16 @@ $overlay.append($image);
   
    console.log('prev: ', $prevImage[0]);
 
-   if( $prevImage[0] == undefined){
+   if( $prevImage[0] == undefined || $prevImage == false){
+    $prevImage = $currentImageContainer;
 
-    console.log('Go no further');
+  return false;
 
   }  else {
 
   showImage($prevImage[0]);
-  return $prevImage.length = 0;
+   $prevImage.length = 0;
+   return false;
 
   }
  });
@@ -64,12 +85,12 @@ $overlay.append($image);
     //get next image
 
     $nextImage = $($currentImageContainer).next();
-    for(i = 0; i < $nextImage.length; i++){
-      console.log($nextImage[i]);
-    }
 
-    if( $nextImage[0] == undefined){
-      return $nextImage.length = 0;
+
+    if( $nextImage[0] == undefined || $nextImage == false){
+      $nextImage = $currentImageContainer;
+      return false;
+      // return $nextImage.length = 0;
       console.log('Go no further');
 
     }  else {
@@ -85,9 +106,12 @@ $overlay.append($image);
  function showImage(newImageContainer){
      console.log('showImage: ', newImageContainer);
 
-      //fade in label content
-     $($label_content).removeClass('fadeOut');
-     $($label_content).addClass('fadeIn');
+    $($label).removeClass('slideOut');
+    $($label).addClass('slideIn');
+
+    //   //fade in label content
+    //  $($label_content).removeClass('fadeOut');
+    //  $($label_content).addClass('fadeIn');
 
      //remove active from former current image container
     $($currentImageContainer).removeClass("active");
@@ -159,6 +183,7 @@ $overlay.append($image);
 
 
     function fillLabel(title, desc){
+      console.log('fill');
 
        $($label_title).html(title);
        $($label_desc).html(desc);
@@ -171,9 +196,15 @@ $overlay.append($image);
       $($overlay).removeClass('visible');
       $($overlay).addClass('hidden');
 
+      clearLabel();
+
       //hide label contents
-      $($label_content).removeClass('fadeIn');
-      $($label_content).addClass('fadeOut');
+      // $($label_content).removeClass('fadeIn');
+      // $($label_content).addClass('fadeOut');
+
+      //hide label
+      $($label).removeClass('slideIn ');
+      $($label).addClass('slideOut');
 
     })
 }
@@ -209,6 +240,8 @@ var FadeTransition = Barba.BaseTransition.extend({
   
       var _this = this;
       var $el = $(this.newContainer);
+      Barba.Pjax.cacheEnabled = false;
+
   
       $(this.oldContainer).hide();
   
@@ -256,7 +289,7 @@ Barba.Pjax.preventCheck = function(evt, element) {
 
 	// additional (besides .no-barba) ignore links with these classes
 	// ab-item is for wp admin toolbar links
-	var ignoreClasses = ['ab-item', 'image-wrap', 'attachment-full'];
+	var ignoreClasses = ['ab-item', 'image-wrap', 'attachment-full', 'gallery-label'];
 	for (var i = 0; i < ignoreClasses.length; i++) {
 		if (element.classList.contains(ignoreClasses[i])) {
 			return false;
