@@ -17,7 +17,6 @@ $(window).on('load', function(){
 
 Barba.Dispatcher.on('transitionCompleted', function(currentStatus, oldStatus, container) {
 
-console.log('container', container);
 //  $overlay = $($(container).find('#gallery-overlay'));
 
   // Re-init your scripts here.
@@ -38,15 +37,18 @@ let $label_desc = $('#gallery-label--desc');
 var $label_content = $('#gallery-label--wrap');
 let $image = $("<img>");
 var $currentImageContainer = null;
-console.log($currentImageContainer);
 
 $overlay.append($image);
 
 
 $('nav').on("click", function(){
   console.log('nav click');
+  console.log('container', $currentImageContainer);
+
 
   clearLabel();
+
+  return;
   
 });
 
@@ -55,63 +57,66 @@ function clearLabel(){
   $($label).addClass('slideOut');
   $($label_title).html("");
   $($label_desc).html("");
+  $( "#next" ).unbind( "click" );
+  $( "#prev" ).unbind( "click" );
+
+
   return;
 }
+
+$("#next").on("click", function(){
+  //get next image
+
+  $nextImage = $($currentImageContainer).next();
+  console.log('next: ', $nextImage[0]);
+
+
+
+  if( $nextImage[0] == undefined || $nextImage == false){
+    $nextImage[0] = null;
+   false;
+
+  }  else {
+
+  showImage($nextImage[0]);
+   $nextImage.length = 0;
+
+  }
+
+  
+});
 
 
  $("#prev").on("click",function(){
 
   //get previous image
-  //  $prevImage = $("div.active").prev();
+
   $prevImage = $($currentImageContainer).prev();
   
-   console.log('prev: ', $prevImage[0]);
+  console.log('prev: ', $prevImage[0]);
+
+   for(i =0; i > $prevImage.length; i++){
+     console.log($prevImage[i]);
+   }
 
    if( $prevImage[0] == undefined || $prevImage == false){
-    $prevImage = $currentImageContainer;
+    $prevImage[0] = $currentImageContainer;
 
   return false;
 
   }  else {
 
   showImage($prevImage[0]);
-   $prevImage.length = 0;
-   return false;
+   return $prevImage.length = 0;
 
   }
  });
 
- $("#next").on("click", function(){
-    //get next image
-
-    $nextImage = $($currentImageContainer).next();
-
-
-    if( $nextImage[0] == undefined || $nextImage == false){
-      $nextImage = $currentImageContainer;
-      return false;
-      // return $nextImage.length = 0;
-      console.log('Go no further');
-
-    }  else {
-
-    showImage($nextImage[0]);
-    return $nextImage.length = 0;
-
-    }
-  
-    
- });
-
  function showImage(newImageContainer){
-     console.log('showImage: ', newImageContainer);
 
     $($label).removeClass('slideOut');
     $($label).addClass('slideIn');
 
-    //   //fade in label content
-    //  $($label_content).removeClass('fadeOut');
-    //  $($label_content).addClass('fadeIn');
 
      //remove active from former current image container
     $($currentImageContainer).removeClass("active");
@@ -131,7 +136,7 @@ function clearLabel(){
      var $image_title = $($new_img ).attr("title");
      var $image_desc = $($new_img ).attr("desc");
 
-     console.log($image_url,  $image_height,  $image_title, $image_desc  )
+     console.log($image_url,  $image_height,  $image_title, $image_desc  );
  
      fillLabel($image_title, $image_desc);
 
@@ -183,7 +188,7 @@ function clearLabel(){
 
 
     function fillLabel(title, desc){
-      console.log('fill');
+      console.log('fill label');
 
        $($label_title).html(title);
        $($label_desc).html(desc);
