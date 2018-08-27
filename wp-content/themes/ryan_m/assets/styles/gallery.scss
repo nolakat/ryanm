@@ -11,8 +11,25 @@
     transition: .25s all ease;
 }
 
-.slideIn{
-    
+
+.full-img{
+    background-image: url('http://localhost/ryan_m/wp-content/uploads/2018/08/FullSizeRender.jpg');
+    height: 100%;
+    width: 100%;
+    background-size:cover;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    @media(min-width: $Viewport-sm){
+        position: absolute;
+        height:90vh;
+        width: 100vw;
+      }
+
+      @media(min-width: $Viewport-md){
+         
+      }
 }
 
 
@@ -25,9 +42,10 @@
     grid-column: 1 / span 12;
     grid-row: 1/ span 3;
     overflow:hidden;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(6,  minmax(100px, 200px));
     grid-template-rows: 1fr 1fr 1fr;
     display: grid;
+    overflow-y: scroll;
 
       .image-wrap{
         // max-width: 450px;
@@ -59,11 +77,28 @@
     justify-content: center;
     flex-flow: column;
     align-items: center;
+    border: 1px solid #ccc;
+
+    span {
+        background: #404040;
+        padding: 10px 35px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    *{
+        opacity: 0;
+    }
     
 }
 
 .slideIn{
     #gallery-label--wrap{
+
+        *{
+            opacity: 1;
+            transition: 1s all ease;
+        }
         width: 100%;
         transition: .25s all cubic-bezier(0.4, 0, 1, 1);
     }
@@ -71,6 +106,10 @@
 
 .slideOut{
     #gallery-label--wrap{
+
+        *{
+            opacity: 0;
+        }
         width: 0%;
         transition: .25s all cubic-bezier(0.4, 0, 1, 1);
     }
@@ -80,19 +119,20 @@
     grid-row: 3;
     overflow: hidden;
     z-index: 3;
+    
   
     .gallery-label--content{
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 10px 20px;
+     
 
         a{
             position:relative;
             top: 0px;
-            transition: top .25s ease-in;
-            box-shadow: 0px 0px 0px rgba(0,0,0,0.5);
-            color: mediumslateblue;
+            color: #ccc;
+            padding: 10px 15px;
+            border: 1px solid #ccc;
 
             &:hover{
                 cursor: pointer;
@@ -101,7 +141,6 @@
                 transition: top .25s ease-in;
 
                 i{
-                    text-shadow: 0px 2px 2.5px rgba(0,0,0,0.5);
                 }
             }
         }
@@ -113,7 +152,7 @@
     }
 
     #gallery-label--desc{
-        padding: 15px 0px;
+        padding: 5px 0px;
     }
 
     #gallery-label--desc{

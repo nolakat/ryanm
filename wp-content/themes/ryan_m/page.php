@@ -17,7 +17,7 @@ get_header();
 
 		<main id="main">
 			<div class="main-wrap">
-
+paaageee
 		<?php
 		while ( have_posts() ) :
 			the_post();
@@ -33,7 +33,7 @@ get_header();
 		</main><!-- #main -->
 
 		<div id="gallery-label" class="gallery-label">
-  <div id="gallery-label--wrap">
+<div id="gallery-label--wrap">
     <div class="gallery-label--content">
       <a id="prev" class="no-barba"> << </a>
       <h1 id="gallery-label--title"></h1>
@@ -41,8 +41,8 @@ get_header();
       </div>
       <h5 id="gallery-label--desc"></h5>
       <span>Buy Print</span>
-    </div>
-  </div>
+</div>
+
 
 <?php
 

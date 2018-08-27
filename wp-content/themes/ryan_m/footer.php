@@ -16,7 +16,17 @@
 
 	<footer id="colophon" class="site-footer">
 		<div class="site-info">
-		This is the footer
+		<div class="social-icons">
+		<i class="fab fa-facebook"></i>
+		<i class="fab fa-instagram"></i>
+		<i class="fab fa-twitter"></i>
+
+
+
+
+
+
+		</div>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 

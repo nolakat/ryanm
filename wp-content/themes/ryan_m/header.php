@@ -39,18 +39,22 @@
 			the_custom_logo();
 			if ( is_front_page() && is_home() ) :
 				?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Ryan </br> McCormick</a></h1>
 				<?php
 			else :
 				?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
+				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">Ryan </br> McCormick</a></p>
 				<?php
 			endif;
 			$ryan_m_description = get_bloginfo( 'description', 'display' );
 			if ( $ryan_m_description || is_customize_preview() ) :
 				?>
-				<p class="site-description"><?php echo $ryan_m_description; /* WPCS: xss ok. */ ?></p>
 			<?php endif; ?>
+		<div class="social-icons">
+		<i class="fab fa-facebook"></i>
+		<i class="fab fa-instagram"></i>
+		<i class="fab fa-twitter"></i>
+		</div>
 		</div><!-- .site-branding -->
 
 		<nav id="site-navigation" class="main-navigation">

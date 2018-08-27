@@ -1,8 +1,7 @@
 #new-grid {
   width: 100%;
-  height: 100vh;
   display: grid;
-  grid-template-areas: " header main main" "header main main" "header main main" "footer footer footer" "footer footer footer"; }
+  grid-template-areas: " header main main" "header main main" "header main main" "footer footer footer"; }
   @media (min-width: 350px) {
     #new-grid {
       grid-template-columns: 1fr;
@@ -12,25 +11,41 @@
       grid-template-columns: minmax(max-content, 250px) 450px 1fr;
       grid-template-rows: 1fr 1fr 1fr 80px; } }
 
-@media (min-width: 350px) {
-  #new-grid > header {
-    position: absolute; } }
-
-@media (min-width: 768px) {
-  #new-grid > header {
-    position: relative;
-    grid-area: header;
-    background-color: #fff; } }
+#new-grid > header {
+  border-right: 1px solid #ccc; }
+  @media (min-width: 350px) {
+    #new-grid > header {
+      position: absolute;
+      z-index: 2; } }
+  @media (min-width: 768px) {
+    #new-grid > header {
+      position: relative;
+      grid-area: header;
+      background-color: #fff; } }
 
 #new-grid > main {
-  background: coral; }
+  background: white; }
+  @media (min-width: 350px) {
+    #new-grid > main {
+      position: absolute;
+      height: 90vh; } }
   @media (min-width: 768px) {
     #new-grid > main {
-      grid-area: main; } }
+      grid-area: main;
+      position: relative;
+      height: minmax(1200px, max-content); } }
 
 #new-grid > footer {
   grid-area: footer;
-  background: lightgreen; }
+  background: white;
+  border-top: 1px solid #ccc; }
+  @media (min-width: 350px) {
+    #new-grid > footer {
+      height: 10vh; } }
+  @media (min-width: 768px) {
+    #new-grid > footer {
+      height: auto;
+      position: relative; } }
 
 #gallery-modal {
   background: purple;
@@ -42,14 +57,100 @@
 #gallery-grid {
   display: grid;
   height: 100%;
-  grid-template-columns: repeat(12, 1fr);
+  grid-template-columns: repeat(5, minmax(100px, 200px));
   grid-template-rows: repeat(3, 1fr); }
 
 body {
-  background: #CDCACC; }
+  background: #CDCACC;
+  overflow-x: hidden; }
 
 header {
-  background: pink; }
+  padding-top: 80px; }
+  header .social-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    header .social-icons i {
+      margin: 5px; }
+
+.site-branding {
+  margin-bottom: 45px; }
+
+.site-title {
+  text-align: center;
+  font-size: 26px;
+  margin: 5px; }
+  .site-title a {
+    color: #333;
+    opacity: .9;
+    font-weight: 600px;
+    text-decoration: none !important; }
+
+.main-navigation li {
+  float: none; }
+
+.main-navigation ul ul {
+  box-shadow: none;
+  float: left;
+  position: relative;
+  left: 0;
+  z-index: 99999;
+  visibility: none;
+  overflow: hidden;
+  display: block; }
+  .main-navigation ul ul li a {
+    color: #333 !important;
+    font-size: 14px !important; }
+
+.main-navigation ul li:hover > ul, .main-navigation ul li.focus > ul.sub-menu {
+  /* left: auto; */
+  opacity: 1;
+  transition: height .5s ease; }
+
+@media (max-width: 768px) {
+  .site-header .menu-toggle {
+    display: block !important; }
+  .site-header .main-navigation ul {
+    display: none; }
+  .site-header .main-navigation.toggled ul#primary-menu {
+    display: flex;
+    flex-flow: column; } }
+
+@media (min-width: 768px) {
+  .site-header .main-navigation ul#primary-menu {
+    display: flex;
+    flex-flow: column; } }
+
+.site-header ul#primary-menu li {
+  margin: 15px; }
+  .site-header ul#primary-menu li a {
+    color: darkslategray;
+    font-size: 16px; }
+
+footer .social-icons {
+  float: right;
+  padding-right: 50px; }
+  footer .social-icons i {
+    margin: 15px 5px; }
+
+div.test-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  height: 100%; }
+
+.title {
+  padding-top: 80px; }
+
+.content-box {
+  padding: 0px 25px;
+  text-align: center;
+  letter-spacing: 0.25px; }
+
+.bgimg {
+  grid-column: 2;
+  height: 100%;
+  background-size: contain; }
 
 .fadeOut {
   opacity: 0;
@@ -60,6 +161,20 @@ header {
   transition-delay: 1s;
   transition: .25s all ease; }
 
+.full-img {
+  background-image: url("http://localhost/ryan_m/wp-content/uploads/2018/08/FullSizeRender.jpg");
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  top: 0; }
+  @media (min-width: 350px) {
+    .full-img {
+      position: absolute;
+      height: 90vh;
+      width: 100vw; } }
+
 #gallery-container {
   display: flex;
   flex-flow: row;
@@ -69,9 +184,10 @@ header {
   grid-column: 1 / span 12;
   grid-row: 1/ span 3;
   overflow: hidden;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(100px, 200px));
   grid-template-rows: 1fr 1fr 1fr;
-  display: grid; }
+  display: grid;
+  overflow-y: scroll; }
   #gallery-container .image-wrap {
     height: auto;
     grid-column: span 2;
@@ -94,15 +210,28 @@ header {
   display: flex;
   justify-content: center;
   flex-flow: column;
-  align-items: center; }
+  align-items: center;
+  border: 1px solid #ccc; }
+  #gallery-label--wrap span {
+    background: #404040;
+    padding: 10px 35px;
+    font-weight: 600;
+    color: #fff; }
+  #gallery-label--wrap * {
+    opacity: 0; }
 
 .slideIn #gallery-label--wrap {
   width: 100%;
   transition: 0.25s all cubic-bezier(0.4, 0, 1, 1); }
+  .slideIn #gallery-label--wrap * {
+    opacity: 1;
+    transition: 1s all ease; }
 
 .slideOut #gallery-label--wrap {
   width: 0%;
   transition: 0.25s all cubic-bezier(0.4, 0, 1, 1); }
+  .slideOut #gallery-label--wrap * {
+    opacity: 0; }
 
 #gallery-label {
   grid-column: 1 / span 2;
@@ -112,25 +241,22 @@ header {
   #gallery-label .gallery-label--content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px; }
+    justify-content: space-between; }
     #gallery-label .gallery-label--content a {
       position: relative;
       top: 0px;
-      transition: top .25s ease-in;
-      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
-      color: mediumslateblue; }
+      color: #ccc;
+      padding: 10px 15px;
+      border: 1px solid #ccc; }
       #gallery-label .gallery-label--content a:hover {
         cursor: pointer;
         top: -1.5px;
         transition: top .25s ease-in; }
-        #gallery-label .gallery-label--content a:hover i {
-          text-shadow: 0px 2px 2.5px rgba(0, 0, 0, 0.5); }
   #gallery-label #gallery-label--title {
     padding: 0px 50px;
     font-size: 24px; }
   #gallery-label #gallery-label--desc {
-    padding: 15px 0px; }
+    padding: 5px 0px; }
   #gallery-label #gallery-label--desc {
     text-align: center; }
 
@@ -162,3 +288,59 @@ div#gallery-overlay {
     border: 2px solid black;
     position: relative;
     max-height: 800px !important; }
+
+div#fullslide-grid {
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75); }
+  div#fullslide-grid .fullslider-controls {
+    position: absolute;
+    top: 50%;
+    opacity: .5;
+    font-size: 20px;
+    padding: 10px 20px;
+    border: 1px solid #fff;
+    color: #fff; }
+    div#fullslide-grid .fullslider-controls:hover {
+      cursor: pointer;
+      opacity: 1; }
+    div#fullslide-grid .fullslider-controls.slick-prev {
+      left: 10px; }
+    div#fullslide-grid .fullslider-controls.slick-next {
+      right: 10px; }
+  div#fullslide-grid .slick-list {
+    height: 100%; }
+    div#fullslide-grid .slick-list .slick-track {
+      height: 100%; }
+  div#fullslide-grid ul.slick-slider {
+    margin: 0px !important;
+    padding: 0px;
+    height: 100%; }
+  div#fullslide-grid .slide {
+    background-repeat: no-repeat;
+    min-height: 100%;
+    position: relative;
+    background-position: bottom center; }
+    div#fullslide-grid .slide .content-wrap {
+      background: #202020;
+      color: #ccc;
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      padding: 15px 50px;
+      text-align: center;
+      font-size: 18px; }
+      div#fullslide-grid .slide .content-wrap a {
+        text-decoration: none;
+        color: #fff;
+        font-weight: light; }
+      div#fullslide-grid .slide .content-wrap .content {
+        opacity: 0;
+        transition: opacity 1s ease; }
+    div#fullslide-grid .slide.slick-active .content-wrap {
+      opacity: .85; }
+      div#fullslide-grid .slide.slick-active .content-wrap .content {
+        opacity: 1; }
+  div#fullslide-grid button {
+    position: absolute;
+    top: 0; }

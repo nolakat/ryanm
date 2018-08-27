@@ -5,13 +5,55 @@ $(window).on('load', function(){
     Barba.Pjax.Dom.containerClass = 'main-wrap'; 
     Barba.Pjax.cacheEnabled = false;
 
-    Barba.Pjax.start();
+
+    fullSlider();
+
+
+
+     Barba.Pjax.start();
+
+
+//     var myVar;
+
+//     myFunction();
+
+// function myFunction() {
+//     myVar = setInterval(alertFunc, 3000);
+// }
+
+// function alertFunc() {
+//     console.log('switch');
+// }
+
+
+
+
+    // var slideout = new Slideout({
+    //   'panel': document.getElementById('main'),
+    //   'menu': document.getElementById('site-navigation'),
+    //   'padding': 256,
+    //   'tolerance': 70
+    // });
+
+    // document.querySelector('.toggle-button').addEventListener('click', function() {
+    //   slideout.toggle();
+    //   if(slideout.isOpen()){
+   
+    //   }else{
+      
+    //   }
+    // });
 
 
     // $('#gallery-container').masonry({
     //   itemSelector: '.image-wrap'
 
     // });
+});
+Barba.Dispatcher.on('transitionCompleted', function(currentStatus, oldStatus, container) {
+
+
+
 });
 
 
@@ -20,11 +62,26 @@ Barba.Dispatcher.on('transitionCompleted', function(currentStatus, oldStatus, co
 //  $overlay = $($(container).find('#gallery-overlay'));
 
   // Re-init your scripts here.
-
+      fullSlider();
       init();
      
 
 });
+
+
+fullSlider = function(){
+  jQuery(function($){
+    $('.slick-slider').slick({
+         autoplay: true,
+         fade: true,
+         infinite: true,
+         speed: 150,
+         prevArrow: '<a data-role="none" class="no-barba fullslider-controls slick-prev" style=""> <i class="fas fa-chevron-left"></i></button>',
+         nextArrow: '<a data-role="none" class="no-barba fullslider-controls slick-next" style=""> <i class="fas fa-chevron-right"></i></button>',
+         
+     });
+});
+}
 
 
 init = function(){
@@ -45,7 +102,8 @@ $('nav').on("click", function(){
   console.log('nav click');
   console.log('container', $currentImageContainer);
 
-
+  $( "#next" ).unbind( "click" );
+  $( "#prev" ).unbind( "click" );
   clearLabel();
 
   return;
@@ -57,60 +115,37 @@ function clearLabel(){
   $($label).addClass('slideOut');
   $($label_title).html("");
   $($label_desc).html("");
-  $( "#next" ).unbind( "click" );
-  $( "#prev" ).unbind( "click" );
+
 
 
   return;
 }
 
 $("#next").on("click", function(){
-  //get next image
-
   $nextImage = $($currentImageContainer).next();
-  console.log('next: ', $nextImage[0]);
-
-
 
   if( $nextImage[0] == undefined || $nextImage == false){
     $nextImage[0] = null;
-   false;
-
+    return false;
   }  else {
-
   showImage($nextImage[0]);
-   $nextImage.length = 0;
-
+  return $nextImage.length = 0;
   }
+});
 
+$("#prev").on("click",function(){
+  $prevImage = $($currentImageContainer).prev();
   
+   if( $prevImage[0] == undefined || $prevImage == false){
+    $prevImage[0] = null;
+    return false;
+  }  else {
+  showImage($prevImage[0]);
+  return $prevImage.length = 0;
+  }
 });
 
 
- $("#prev").on("click",function(){
-
-  //get previous image
-
-  $prevImage = $($currentImageContainer).prev();
-  
-  console.log('prev: ', $prevImage[0]);
-
-   for(i =0; i > $prevImage.length; i++){
-     console.log($prevImage[i]);
-   }
-
-   if( $prevImage[0] == undefined || $prevImage == false){
-    $prevImage[0] = $currentImageContainer;
-
-  return false;
-
-  }  else {
-
-  showImage($prevImage[0]);
-   return $prevImage.length = 0;
-
-  }
- });
 
  function showImage(newImageContainer){
 
@@ -162,28 +197,6 @@ $("#next").on("click", function(){
       showImage(newContainer[0]);
       return newContainer.length = 0;
 
-      // //toggle active class
-      // $($current_img).removeClass("active");
-      // $current_img = $(this).parent(); 
-      // $($current_img).addClass("active");
-
-      // $($label_content).removeClass('fadeOut');
-      // $($label_content).addClass('fadeIn');
-
-  
-      // //get attributes
-      // var $image_url = $(this).attr("src");
-      // var $image_height = $(this).attr("height");
-      // var $image_title = $(this).attr("title");
-      // var $image_desc = $(this).attr("desc");
-  
-      // fillLabel($image_title, $image_desc);
-
-      // $image_height = $image_height + 'px';
-      // $($image).css('max-height', $image_height);
-      // $image.attr("src", $image_url);
-      // $image.attr("class", "overlay_img");
-
     });
 
 
@@ -196,12 +209,12 @@ $("#next").on("click", function(){
 
     $( "#gallery-overlay").on("click", function(){
       event.preventDefault();
+      clearLabel();
+
 
       //hide overlay
       $($overlay).removeClass('visible');
       $($overlay).addClass('hidden');
-
-      clearLabel();
 
       //hide label contents
       // $($label_content).removeClass('fadeIn');

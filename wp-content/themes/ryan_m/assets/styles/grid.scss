@@ -4,12 +4,11 @@ $Viewport-lg: 1224px;
 
 #new-grid{
     width: 100%;
-    height: 100vh;
+    // min-height: 100vh;
     display: grid;
     grid-template-areas: " header main main"
                           "header main main"
                            "header main main"
-                          "footer footer footer"
                           "footer footer footer";
 
                           @media(min-width: $Viewport-sm){
@@ -24,10 +23,11 @@ $Viewport-lg: 1224px;
 }
 
 #new-grid > header{
- 
+ border-right: 1px solid #ccc;
 
   @media(min-width: $Viewport-sm){
     position: absolute;
+    z-index: 2;
   }
 
   @media(min-width: $Viewport-md){
@@ -39,16 +39,39 @@ $Viewport-lg: 1224px;
 }
 
 #new-grid > main{
+
+    @media(min-width: $Viewport-sm){
+        position: absolute;
+        height:90vh;
+      }
+    
     @media(min-width: $Viewport-md){
         grid-area: main;
+        position: relative;
+        height: minmax(1200px, max-content);
                               }
   
-    background: coral;
+    background: white;
+}
+
+#new-grid > main.page-fullslider{
+
 }
 
 #new-grid > footer{
+
+    @media(min-width: $Viewport-sm){
+        height:10vh;
+      }
+
+    @media(min-width: $Viewport-md){
+        height: auto;
+        position: relative;
+    }
+
     grid-area: footer;
-    background: lightgreen;
+    background: white;
+    border-top: 1px solid #ccc;
 }
 
  #gallery-modal{
@@ -63,6 +86,7 @@ $Viewport-lg: 1224px;
 #gallery-grid{
     display: grid;
     height: 100%;
-    grid-template-columns: repeat(12, 1fr);
+    // grid-template-columns: repeat(12, 1fr);
+    grid-template-columns:  repeat(5, minmax(100px, 200px));
     grid-template-rows: repeat(3 ,1fr);
 }
